@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
-    private static final String CREATE_TABLE_SQL = "CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(40), lastName VARCHAR(40), age INT)";
+    private static final String CREATE_TABLE_SQL = "CREATE TABLE IF NOT EXISTS users (id BIGINT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(40), lastName VARCHAR(40), age INT)";
     private static final String INSERT_USER_SQL = "INSERT INTO users (name, lastName, age) VALUES (?, ?, ?)";
     private static final String GET_ALL_USER_SQL = "SELECT * FROM users";
     private static final String CLEAN_USER_SQL = "DELETE FROM users";
