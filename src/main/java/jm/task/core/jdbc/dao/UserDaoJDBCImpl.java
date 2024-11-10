@@ -16,44 +16,31 @@ public class UserDaoJDBCImpl implements UserDao {
     private static final String CLEAN_USER_SQL = "DELETE FROM users";
     private static final String DELETE_USER_SQL = "DELETE FROM users WHERE id = ?";
     private static final String DROP_TABLE_SQL = "DROP TABLE IF EXISTS users";
-
-    private Util util = new Util();
     private PreparedStatement ps;
+
     public UserDaoJDBCImpl() {
     }
 
     public void createUsersTable() {
-        try{
+        try (Util util = new Util()) {
             ps = util.getConnection().prepareStatement(CREATE_TABLE_SQL);
             ps.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Не удалось создать новую таблицу\n" + e.getMessage());
-        } finally {
-            try {
-                ps.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
     public void dropUsersTable() {
-        try {
+        try (Util util = new Util()) {
             ps = util.getConnection().prepareStatement(DROP_TABLE_SQL);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            try {
-                ps.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
     public void saveUser(String name, String lastName, byte age) {
-        try {
+        try (Util util = new Util()) {
             ps = util.getConnection().prepareStatement(INSERT_USER_SQL);
             ps.setString(1, name);
             ps.setString(2, lastName);
@@ -61,34 +48,22 @@ public class UserDaoJDBCImpl implements UserDao {
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            try {
-                ps.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
     public void removeUserById(long id) {
-        try {
+        try (Util util = new Util()) {
             ps = util.getConnection().prepareStatement(DELETE_USER_SQL);
             ps.setLong(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            try {
-                ps.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<User>();
-        try {
+        try (Util util = new Util()) {
             ps = util.getConnection().prepareStatement(GET_ALL_USER_SQL);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -102,28 +77,16 @@ public class UserDaoJDBCImpl implements UserDao {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            try {
-                ps.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
         return users;
     }
 
     public void cleanUsersTable() {
-        try {
+        try (Util util = new Util()) {
             ps = util.getConnection().prepareStatement(CLEAN_USER_SQL);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            try {
-                ps.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 }
