@@ -29,8 +29,7 @@ public class Util implements AutoCloseable {
 
     @Override
     public void close() throws SQLException {
-        if (connection != null) {
+        if (connection == null) return;
             connection.close();
-        }
     }
 }
