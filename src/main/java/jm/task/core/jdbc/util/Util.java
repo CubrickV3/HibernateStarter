@@ -10,7 +10,7 @@ public class Util implements AutoCloseable {
 
     private static final String URL = "jdbc:mysql://localhost:3306/mydatebase";
     private static final String USER = "root";
-    private static final String PASSWORD = "root";
+    private static final String PASSWORD = "gogol.2002";
 
     private static Connection connection;
 
